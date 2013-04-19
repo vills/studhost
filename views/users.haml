@@ -1,0 +1,27 @@
+%h3 Список групп пользоваталей
+%br
+
+.right
+  %ul.button-bar
+    %li
+      %a{:href=>'/users/groups/add'}
+        %i.icon-external-link
+        Добавить
+
+%br
+
+%table.stripped.table-bordered
+  - @groups.each do |g|
+    %tr
+      %td{:style=>'width:90%'}= g.title
+      %td
+        %a{:href=>("/users/groups/edit/#{g.id}")}
+          %i.icon-pencil
+        %a{:href=>("/users/groups/delete/#{g.id}"), :onclick=>"return confirmDelete('#{g.title}')"}
+          %i.icon-remove
+
+%script
+  :plain
+    function confirmDelete(i) {
+      return confirm("Точно удалить группу \"" + i + "\"?")
+    }

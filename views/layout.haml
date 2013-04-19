@@ -1,0 +1,34 @@
+!!!
+%html{ html_attrs('ru')}
+  %head
+    %title= @title || "Admin panel"
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link{:href=>'/css/kickstart.css', :rel=>'stylesheet', :media=>'all'}
+    %link{:href=>'/style.css', :rel=>'stylesheet'}
+
+    %script{:type=>'text/javascript', :src=>"https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
+
+  %body
+    %div{:style=>'height:51px;padding:0;margin:0'}
+
+    %nav.navbar
+      %ul
+        %li
+          %a{:href=>'/'}
+            %span= "ADMIN"
+            PANEL
+
+    .grid.fluid
+      .col_12{:style=>"border:1px solid #aaa;border-top:none; height:100%;margin-top:0; background-color:white"}
+        .col_3
+          %h5="ПОЛЬЗОВАТЕЛИ"
+          %ul.alt
+            %li
+              %a{:href=>'/users/groups'}="Группы пользователей"
+            %li
+              %a{:href=>'/users/users'}="Список пользователей"
+
+        .col_9
+          =yield

@@ -1,0 +1,7 @@
+%h4= @title
+%br
+
+%form{:method=>'post', :action=>''}
+  - @val = @g ? @g.title : ''
+  %input.col_10{:type=>'text', :placeholder=>'Название группы', :name=>'gname', :value=>("#{@g ? @g.title : ''}")}
+  %input.small{:type=>'submit', :value=>"#{ @g ? "Редактировать" : "Добавить" }"}
