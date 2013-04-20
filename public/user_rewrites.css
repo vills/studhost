@@ -1,0 +1,13 @@
+.user-small {
+  margin-top:0;
+  padding:6px 11px;
+}
+
+a.user-breadcumps {
+  color: #000;
+  text-decoration: none;
+}
+a.user-breadcumps:hover {
+  color: #000;
+  text-decoration: underline;
+}

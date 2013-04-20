@@ -23,7 +23,7 @@ post '/users/faculties/:id/edit' do
 end
 
 get '/users/faculties/:id/delete' do
-  @g = Group.get(params['id'])
+  @g = Faculty.get(params['id'])
   @g.destroy
   redirect '/users/faculties'
 end
