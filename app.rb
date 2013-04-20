@@ -24,4 +24,4 @@ end
 
 # include routes
 Dir[Dir.pwd + "/routes/*.rb"].each { |f| load f }
-Dir[Dir.pwd + "/routes/admin/*.rb"].each { |f| load f }
+Dir[Dir.pwd + "/routes/*/*.rb"].each { |f| load f }

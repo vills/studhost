@@ -10,6 +10,8 @@ class Admin
   property :password,   String, :length=>32, :required=>true
 end
 
+
+# << USERS >> #
 class User
   include DataMapper::Resource
 
@@ -18,14 +20,25 @@ class User
   property :email,      String, :required=>true, :index=>true
   property :password,   String, :length=>32, :required=>true
 
-  belongs_to :group
+  belongs_to :speciality
 end
 
-class Group
+class Speciality
   include DataMapper::Resource
 
   property :id,         Serial
   property :title,      String, :required=>true, :index=>true
 
   has n, :users
+  belongs_to :faculty
 end
+
+class Faculty
+  include DataMapper::Resource
+
+  property :id,         Serial
+  property :title,      String, :required=>true, :index=>true
+
+  has n, :specialities
+end
+# >> USERS << #

@@ -9,6 +9,7 @@
 
     %script{:type=>'text/javascript', :src=>"https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
     %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
+    %script{:type=>'text/javascript', :src=>'/js/popup.js'}
 
   %body
     %div{:style=>'height:51px;padding:0;margin:0'}
@@ -17,18 +18,12 @@
       %ul
         %li
           %a{:href=>'/'}
-            %span= "ADMIN"
-            PANEL
+            %span ПАНЕЛЬ АДМИНИСТРАТОРА
+        %li
+          %a{:href=>'/users/faculties'}
+            %i.icon-group
+            Студенты
 
     .grid.fluid
-      .col_12{:style=>"border:1px solid #aaa;border-top:none; height:100%;margin-top:0; background-color:white"}
-        .col_3
-          %h5="ПОЛЬЗОВАТЕЛИ"
-          %ul.alt
-            %li
-              %a{:href=>'/users/groups'}="Группы пользователей"
-            %li
-              %a{:href=>'/users/users'}="Список пользователей"
-
-        .col_9
-          =yield
+      .col_12
+        =yield
