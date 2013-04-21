@@ -11,12 +11,17 @@ require 'yaml'
 require 'digest/md5'
 
 set :bind, '0.0.0.0'
-set :sessions => true
+
+enable :sessions
 
 # loading config
 APP_CONFIG = YAML.load( File.read(Dir.pwd + "/config.yml") )[ Sinatra::Application.environment.to_s ]
 APP_CONFIG['ENV'] = Sinatra::Application.environment.to_s
-pp APP_CONFIG
+
+# include helpers
+Dir[Dir.pwd + "/helpers/*.rb"].each { |f| require f }
+Dir[Dir.pwd + "/helpers/*/*.rb"].each { |f| require f }
+
 # include models
 require 'data_mapper'
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{Sinatra::Application.environment}.sqlite")

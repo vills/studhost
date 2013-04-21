@@ -13,19 +13,19 @@
 %div
   &nbsp;
 
-/ %table.striped
-/   - @u.each do |ea|
-/     %tr
-/       %td{:style=>'width:90%', :id=>"line#{ea.id}"}
-/         %a{:href=>"#{@init_url}/#{ea.id}/students"}= ea.name
-/         %form.hide{:method=>'post', :action=>"#{@init_url}/#{ea.id}/edit"}
-/           %input.col_10{:type=>'text', :name=>'name', :value=>"#{ea.title}"}
-/           %button{:type=>'submit', :style=>'display:none'}
-/       %td
-/         %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
-/           %i.icon-pencil
-/         %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.title}')"}
-/           %i.icon-remove
+%table.striped
+  - @u.each do |ea|
+    %tr
+      %td{:style=>'width:90%', :id=>"line#{ea.id}"}
+        %a{:href=>"#{@init_url}/#{ea.id}/students"}= ea.name
+        %form.hide{:method=>'post', :action=>"#{@init_url}/#{ea.id}/edit"}
+          %input.col_10{:type=>'text', :name=>'name', :value=>"#{ea.name}"}
+          %button{:type=>'submit', :style=>'display:none'}
+      %td
+        %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
+          %i.icon-pencil
+        %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.name}')"}
+          %i.icon-remove
 
 - if @u.count < 1
   .notice.warning

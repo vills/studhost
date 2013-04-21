@@ -7,15 +7,15 @@ get '/registration' do
 end
 
 post '/registration' do
-  @validate_hash = (0...32).map{(65+rand(26)).chr}.join
+  @validate_hash = Helpers::random_string(32)
   @student = Speciality.get(params['speciality']).students.new(
                                                                   :name=>params['name'].strip,
                                                                   :email=>params['email'].strip,
                                                                   :password=>params['password'],
                                                                   :emailapprhash=>@validate_hash
                                                                   )
+  pp @student
   if @student.save
-    @student.update!(:password=>Digest::MD5.hexdigest(params['password']))
     @msg = "Для подтверждения своего почтового ящика перейдите по ссылке: http://#{APP_CONFIG['domain']}/registration/validate/#{@validate_hash}"
     send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
     puts @msg
@@ -28,11 +28,12 @@ end
 
 get '/registration/validate/:key' do
   @s = Student.first(:emailapprhash=>"#{params['key']}")
-  pp @s
   if @s.nil?
     haml :'registration/validation_bad', :layout=>:layout_registration
   else
-    @s.update(:emailappr=>true, :emailapprhash=>'')
+    pp @s
+    @s.update!(:emailappr=>true, :emailapprhash=>'')
+    pp @s
     haml :'registration/validation_good', :layout=>:layout_registration
   end
 end

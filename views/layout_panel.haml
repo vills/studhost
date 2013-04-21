@@ -1,7 +1,7 @@
 !!!
 %html{ html_attrs('ru')}
   %head
-    %title= @title || "Admin panel"
+    %title= @title || "Регистрация в системе"
     %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     %link{:href=>'/css/kickstart.css', :rel=>'stylesheet', :media=>'all'}
@@ -12,16 +12,8 @@
     %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
 
   %body
-    %nav.navbar
-      %ul
-        %li
-          %a{:href=>'/admin'}
-            %span ПАНЕЛЬ АДМИНИСТРАТОРА
-        %li
-          %a{:href=>'/admin/users/faculties'}
-            %i.icon-group
-            Студенты
-
-    .grid.fluid
-      .col_12
-        =yield
+    %div.callout
+      .grid
+        %h1 Регистрация в системе
+        %em Всего несколько простых шагов и хостинг ваш!
+    %p sss
