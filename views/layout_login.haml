@@ -12,16 +12,8 @@
     %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
 
   %body
-    %nav.navbar
-      %ul{:style=>'float:right'}
-        %li
-          %a{:href=>'/logout', :title=>'Выход'}
-            %i.icon-signout
-            Выход
-      %ul
-        %li
-          %a{:href=>'/panel'}
-            %span= "#{@student.name}"
+    %div.callout
+      %h3 АВТОРИЗАЦИЯ
 
-  .grid
-    =yield
+    .grid
+      =yield

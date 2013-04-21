@@ -16,7 +16,11 @@ helpers do
   end
 
   def authorize!
-    redirect '/login' unless authorized?
+    if authorized?
+      redirect '/login/suspended' unless session[:user][:approved]
+    else
+      redirect '/login' unless authorized?
+    end
   end
 
   def logout!

@@ -4,7 +4,10 @@
 
 before '/admin*' do
   protected!
-  pp protected!
+end
+
+before '/panel*' do
+  authorize!
 end
 
 
