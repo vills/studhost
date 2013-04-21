@@ -1,8 +1,8 @@
-- @init_url = "/users/faculties/#{@f.id}/specialities"
+- @init_url = "/admin/users/faculties/#{@f.id}/specialities"
 
 .col_8
   %h4{:style=>'padding:0; margin:0'} Специальности
-  %a.user-breadcumps{:href=>'/users/faculties'}
+  %a.user-breadcumps{:href=>'/admin/users/faculties'}
     %em= @f.title
 .col_4.right{:style=>'height:40px'}
   %form{:method=>'post', :action=>"#{@init_url}/add"}

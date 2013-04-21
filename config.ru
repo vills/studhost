@@ -3,6 +3,6 @@ require 'sinatra'
 
 set :environment, :production
 
-require './outside.rb'
+require './app.rb'
 
 run Sinatra::Application

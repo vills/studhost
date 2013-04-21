@@ -1,11 +1,11 @@
-- @init_url = "/users/faculties/#{@f.id}/specialities/#{@s.id}/students"
+- @init_url = "/admin/users/faculties/#{@f.id}/specialities/#{@s.id}/students"
 
 .col_12
   %h4{:style=>'padding:0; margin:0'} Студенты
-  %a.user-breadcumps{:href=>'/users/faculties'}
+  %a.user-breadcumps{:href=>'/admin/users/faculties'}
     %em= @f.title
   %em >
-  %a.user-breadcumps{:href=>"/users/faculties/#{@f.id}/specialities"}
+  %a.user-breadcumps{:href=>"/admin/users/faculties/#{@f.id}/specialities"}
     %em= @s.title
 
 %div
@@ -13,19 +13,19 @@
 %div
   &nbsp;
 
-%table.striped
-  - @u.each do |ea|
-    %tr
-      %td{:style=>'width:90%', :id=>"line#{ea.id}"}
-        %a{:href=>"#{@init_url}/#{ea.id}/students"}= ea.title
-        %form.hide{:method=>'post', :action=>"#{@init_url}/#{ea.id}/edit"}
-          %input.col_10{:type=>'text', :name=>'title', :value=>"#{ea.title}"}
-          %button{:type=>'submit', :style=>'display:none'}
-      %td
-        %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
-          %i.icon-pencil
-        %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.title}')"}
-          %i.icon-remove
+/ %table.striped
+/   - @u.each do |ea|
+/     %tr
+/       %td{:style=>'width:90%', :id=>"line#{ea.id}"}
+/         %a{:href=>"#{@init_url}/#{ea.id}/students"}= ea.name
+/         %form.hide{:method=>'post', :action=>"#{@init_url}/#{ea.id}/edit"}
+/           %input.col_10{:type=>'text', :name=>'name', :value=>"#{ea.title}"}
+/           %button{:type=>'submit', :style=>'display:none'}
+/       %td
+/         %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
+/           %i.icon-pencil
+/         %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.title}')"}
+/           %i.icon-remove
 
 - if @s.students.count < 1
   .notice.warning

@@ -1,0 +1,22 @@
+%h4 Новые студенты
+- if @notApprovedStudents.count < 1
+  %p Нет
+- else
+  %table.striped
+    %tr
+      %th{:style=>'text-align:left'} Имя
+      %th{:style=>'text-align:left'} Факультет / Специальность
+      %th{:style=>'text-align:left'} E-mail
+      %th
+    - @notApprovedStudents.each do |f|
+      %tr
+        %td= f.name
+        %td= "#{f.speciality.faculty.title} / #{f.speciality.title}"
+        %td= f.email
+        %td
+          .col_6.left
+            %a{:href=>}
+            %i.icon-thumbs-up.icon-2x
+          .col_6.right
+            %i.icon-thumbs-down.icon-2x
+  %hr
