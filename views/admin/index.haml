@@ -1,6 +1,9 @@
+- @init_url = "/admin/users"
+
 %h4 Новые студенты
 - if @notApprovedStudents.count < 1
-  %p Нет
+  %p
+    %em Нет
 - else
   %table.striped
     %tr
@@ -15,8 +18,15 @@
         %td= f.email
         %td
           .col_6.left
-            %a{:href=>}
-            %i.icon-thumbs-up.icon-2x
+            %a{:href=>"#{@init_url}/approve/#{f.id}/true"}
+              %i.icon-thumbs-up.icon-2x
           .col_6.right
-            %i.icon-thumbs-down.icon-2x
+            %a{:href=>"#{@init_url}/approve/#{f.id}/false", :onclick=>"return confirmFalse('#{f.name}')"}
+              %i.icon-thumbs-down.icon-2x
   %hr
+
+%script
+  :plain
+    function confirmFalse(i) {
+      return confirm("Точно отказать студенту \"" + i + "\"?")
+    }

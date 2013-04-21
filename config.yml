@@ -1,0 +1,26 @@
+development: &nps
+  emails:
+    admin:  admin@hosting.vills.me
+    robot:
+      email:  no-reply@hosting.vills.me
+      name:   Hosting ROBOT
+
+  domain:   hosting.vills.me
+
+  administrators:
+    admin:
+      login:    admin
+      password: password
+
+
+
+test:
+  <<: *nps
+
+
+production:
+  emails:
+    admin:  admin@hosting.vills.me
+    robot:  no-reply@hosting.vills.me
+
+  domain:   hosting.vills.me

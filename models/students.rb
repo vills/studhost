@@ -21,6 +21,7 @@ class Student
                                 }
   property :approved,   Boolean,:default=>false, :index=>true
   property :emailappr,  Boolean,:default=>false
+  property :emailapprhash, String, :length=>32, :index=>true
 
   belongs_to :speciality
 end

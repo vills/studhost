@@ -7,18 +7,35 @@ get '/registration' do
 end
 
 post '/registration' do
+  @validate_hash = (0...32).map{(65+rand(26)).chr}.join
   @student = Speciality.get(params['speciality']).students.new(
                                                                   :name=>params['name'].strip,
                                                                   :email=>params['email'].strip,
-                                                                  :password=>params['password']
+                                                                  :password=>params['password'],
+                                                                  :emailapprhash=>@validate_hash
                                                                   )
   if @student.save
+    @student.update!(:password=>Digest::MD5.hexdigest(params['password']))
+    @msg = "Для подтверждения своего почтового ящика перейдите по ссылке: http://#{APP_CONFIG['domain']}/registration/validate/#{@validate_hash}"
+    send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
+    puts @msg
     haml :'registration/accept', :layout=>:layout_registration
   else
     haml :'registration/fail', :layout=>:layout_registration
   end
 end
 
+
+get '/registration/validate/:key' do
+  @s = Student.first(:emailapprhash=>"#{params['key']}")
+  pp @s
+  if @s.nil?
+    haml :'registration/validation_bad', :layout=>:layout_registration
+  else
+    @s.update(:emailappr=>true, :emailapprhash=>'')
+    haml :'registration/validation_good', :layout=>:layout_registration
+  end
+end
 
 
 # AJAX requests

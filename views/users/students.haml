@@ -27,7 +27,7 @@
 /         %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.title}')"}
 /           %i.icon-remove
 
-- if @s.students.count < 1
+- if @u.count < 1
   .notice.warning
     %h3 Пока что здесь нет ни одного студента.
     %p
