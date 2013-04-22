@@ -1,9 +1,12 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rake'
 gem 'sinatra'
 gem 'haml'
 gem 'json'
+
+# server
+gem 'thin'
 
 # datamapper
 gem 'dm-sqlite-adapter'
