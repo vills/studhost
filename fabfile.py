@@ -13,7 +13,7 @@ def deploy():
         '\'https://opscode-omnibus-packages.s3.amazonaws.com/debian/6/x86_64/'
         'chef_11.4.0-1.debian.6.0.5_amd64.deb\' ')
     run('dpkg -i /tmp/chef-omnibus.deb > /dev/null')
-    run('gem install bundler')
+    run('gem list | grep \'bundler \' > /dev/null || gem install bundler')
     run('cat /root/.bashrc | grep export | grep gems > /dev/null || '
         'echo \'export PATH=/var/lib/gems/1.8/bin/:${PATH}\' >> ~/.bashrc')
     run('mkdir -p /var/www/.panel')
