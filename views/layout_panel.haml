@@ -18,10 +18,17 @@
           %a{:href=>'/logout', :title=>'Выход'}
             %i.icon-signout
             Выход
+
       %ul
         %li
           %a{:href=>'/panel'}
-            %span= "#{@student.name}"
+            %span= @panel_title || "#{@student.name}"
+        %li
+        - if @sites.count < 1
+          %a{:href=>'/panel/site/add'}
+            %button.green.small
+              %i.icon-plus
+              Добавить сайт
 
-  .grid
+    
     =yield

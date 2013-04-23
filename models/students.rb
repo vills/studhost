@@ -28,6 +28,7 @@ class Student
   property :is_admin,   Boolean,:default=>false
 
   belongs_to :speciality
+  has n, :sites, :constraint => :destroy
 
   attr_accessor :password
   validates_presence_of :password
@@ -36,6 +37,10 @@ class Student
     @password = pass
     self.salt = Helpers::random_string(10) unless self.salt
     self.crypted_password = Student.encrypt(@password, self.salt)
+  end
+
+  def username
+    self.email.gsub(/\W+/, '')
   end
 
   def self.encrypt(pass, salt)

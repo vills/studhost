@@ -16,6 +16,8 @@ end
 
 post '/login' do
   if session[:user] = Student.authenticate(params["email"], params["password"])
+    pp "sdsdsdsds"
+    pp Student.authenticate(params["email"], params["password"])
     redirect '/panel'
   else
     redirect '/login/retry'

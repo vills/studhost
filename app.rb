@@ -10,33 +10,32 @@ require 'net/smtp'
 require 'yaml'
 require 'digest/md5'
 
-set :bind, '0.0.0.0'
 
-enable :sessions
+#enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :secret => '3fG53ds2FD'
 
 # loading config
 APP_CONFIG = YAML.load( File.read(Dir.pwd + "/config.yml") )[ Sinatra::Application.environment.to_s ]
 APP_CONFIG['ENV'] = Sinatra::Application.environment.to_s
 
-# include helpers
-Dir[Dir.pwd + "/helpers/*.rb"].each { |f| require f }
-Dir[Dir.pwd + "/helpers/*/*.rb"].each { |f| require f }
-
 # include models
 require 'data_mapper'
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{Sinatra::Application.environment}.sqlite")
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{Sinatra::Application.environment}-test.sqlite")
 DataMapper::Logger.new(STDOUT, :debug)
 Dir[Dir.pwd + "/models/*.rb"].each { |f| require f }
 Dir[Dir.pwd + "/models/*/*.rb"].each { |f| require f }
 DataMapper.finalize
+DataMapper.auto_upgrade! if APP_CONFIG['ENV'] == "production"
+puts "Upgrading database" if APP_CONFIG['ENV'] == "production"
 
 # setting view engine
 set :haml, :format => :html5
-def render_file(filename)
-  contents = File.read(filename)
-  Haml::Engine.new(contents).render
-end
 
+# include helpers
+Dir[Dir.pwd + "/helpers/*.rb"].each { |f| require f }
+Dir[Dir.pwd + "/helpers/*/*.rb"].each { |f| require f }
 
 # include routes
 Dir[Dir.pwd + "/routes/*.rb"].each { |f| load f }
@@ -59,9 +58,11 @@ Subject: #{opts[:subject]}
 #{opts[:body]}
 END_OF_MESSAGE
 
-  unless APP_CONFIG['ENV'] = "production"
+  if APP_CONFIG['ENV'] == "production"
     Net::SMTP.start(opts[:server]) do |smtp|
       smtp.send_message msg, opts[:from], to
     end
+  else
+    pp msg
   end
 end

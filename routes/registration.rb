@@ -8,17 +8,23 @@ end
 
 post '/registration' do
   @validate_hash = Helpers::random_string(32)
+  @is_admin = false
+  @approved = false
+  if Student.all.count < 1
+    @is_admin = true
+    @approved = true  
+  end
   @student = Speciality.get(params['speciality']).students.new(
                                                                   :name=>params['name'].strip,
                                                                   :email=>params['email'].strip,
                                                                   :password=>params['password'],
-                                                                  :emailapprhash=>@validate_hash
+                                                                  :emailapprhash=>@validate_hash,
+                                                                  :is_admin=>@is_admin,
+                                                                  :approved=>@approved
                                                                   )
-  pp @student
   if @student.save
     @msg = "Для подтверждения своего почтового ящика перейдите по ссылке: http://#{APP_CONFIG['domain']}/registration/validate/#{@validate_hash}"
     send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
-    puts @msg
     haml :'registration/accept', :layout=>:layout_registration
   else
     haml :'registration/fail', :layout=>:layout_registration
@@ -31,9 +37,7 @@ get '/registration/validate/:key' do
   if @s.nil?
     haml :'registration/validation_bad', :layout=>:layout_registration
   else
-    pp @s
     @s.update!(:emailappr=>true, :emailapprhash=>'')
-    pp @s
     haml :'registration/validation_good', :layout=>:layout_registration
   end
 end

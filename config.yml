@@ -3,7 +3,7 @@ development: &nps
     admin:  admin@hosting.vills.me
     robot:
       email:  no-reply@hosting.vills.me
-      name:   Hosting ROBOT
+      name:   Hosting Robot
 
   domain:   localhost:4567
 
@@ -21,7 +21,9 @@ test:
 production:
   emails:
     admin:  admin@t.vills.me
-    robot:  no-reply@t.vills.me
+    robot:
+      email:  no-reply@t.vills.me
+      name:   Hosting Robot
 
   domain:   t.vills.me
 

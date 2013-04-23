@@ -1,0 +1,33 @@
+.grid.fluid
+
+  - if @errors
+    .col_3
+    .col_6
+      .notice.error
+        %h5 Возникли ошибки:
+        %ul
+        - @errors.each do |e|
+          %li= e
+    .col_3
+
+  %br
+  
+  .col_3
+
+  .col_6
+    %h6 Чтобы создать сайт нужно только выбрать для него уникальный домен.
+
+    %p
+      %i.icon-warning-sign
+      Ваш домен будет размещён в качестве поддомена зоны #{APP_CONFIG['domain']}. Т.е. если вы выберите себе сайт 'andrey', то его полное доменное имя будет 'andrey.#{APP_CONFIG['domain']}'.
+
+    %form{:method=>'post', :action=>''}
+      .col_12
+        %input.col_12{:type=>'text', :name=>'domain', :value=>"#{@domain}"}
+        %p{:style=>'font-size: 11px'}
+          %em Желаемый домен должен содержать только строчные буквы от 'a' до 'z', цифры '0-9' и знак тире '-'.
+
+      .col_12
+        %button.green.col_12{:type=>'submit'} Хочу такой домен!
+
+  .col_3

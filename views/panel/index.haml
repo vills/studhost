@@ -1,0 +1,20 @@
+- if @sites.count < 1
+  .grid.fluid
+    .col_12
+      .notice.warning
+        %h4 У вас ещё не создано ни одного сайта.
+
+- else
+  %nav.navbar-small
+    %ul
+      %li
+        %a{:href=>'/logout', :title=>'Выход'}
+          %i.icon-signout
+          Выход
+
+
+  .col_3
+    %h4 ttt
+
+  .col_9
+    %h3 ww

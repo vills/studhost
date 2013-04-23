@@ -37,6 +37,8 @@ helpers do
   end
 
   def protected!
-    halt [401, "Для доступа сюда необходима авторизация"] unless admin?
+    if Student.all.count > 0
+      halt [401, "Для доступа сюда необходима авторизация"] unless admin?
+    end
   end
 end

@@ -6,10 +6,6 @@ before '/admin*' do
   protected!
 end
 
-before '/panel*' do
-  authorize!
-end
-
 
 get '/' do
   haml :index
