@@ -2,7 +2,11 @@
 #coding: UTF-8
 
 get '/registration' do
-  @faculties = Faculty.all(:order=>[:title.asc])
+  if Student.count < 1
+    @faculties = Faculty.all
+  else
+    @faculties = Faculty.all(:order=>[:title.asc], :id.gt=>1)
+  end
   haml :'registration/main', :layout=>:layout_registration
 end
 

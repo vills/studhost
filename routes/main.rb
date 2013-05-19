@@ -8,7 +8,13 @@ end
 
 
 get '/' do
-  haml :index
+  if Speciality.all().count < 1
+    @f = Faculty.create(:title=>'Преподаватели')
+    @f.specialities.create(:title=>'Преподаватели')
+    redirect '/registration'
+  else
+    haml :index
+  end
 end
 
 get '/admin' do
