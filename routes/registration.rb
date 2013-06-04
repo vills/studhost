@@ -16,7 +16,7 @@ post '/registration' do
   @approved = false
   if Student.all.count < 1
     @is_admin = true
-    @approved = true  
+    # @approved = false  
   end
   @student = Speciality.get(params['speciality']).students.new(
                                                                   :name=>params['name'].strip,
