@@ -10,7 +10,9 @@ fi
 if [[ -d "$USERDIR" ]]; then
   mkdir -p "${USERDIR}/${2}"
   mkdir -p "${USERDIR}/logs"
+  mkdir -p "${USERDIR}/tmp"
   chown www-data:www-data "${USERDIR}/logs"
+  chown www-data:www-data "${USERDIR}/tmp"
   chown $1:$1 "${USERDIR}/${2}"
 
   if [ ! -d "${USERDIR}/${2}" ] && [ ! -d "${USERDIR}/logs" ]; then

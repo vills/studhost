@@ -20,14 +20,15 @@ get '/admin/users/approve/:id/true' do
     @message = "Нет такого студента"
     haml :send_message
   else
-    `sudo studhosting-user-create.sh`
-    if $?.exitstatuss > 0
-      @message = "В системе произошёл сбой. Стоит связаться с администратором."
+    password = Helpers::random_string(10)
+    `sudo /usr/local/bin/studhosting-user-create.sh '#{@s.username}' '#{password}'`
+    if $?.exitstatus > 0
+      @message = "В системе произошёл сбой. Стоит связаться с программистами."
       haml :send_message
     else
       send_email "#{@s.email.strip}", :subject=>"Ваша заявка была одобрена",
-          :body=>"Администратор хостинга одобрил вашу заявку на регистрацию. Вы можете зайти в панель управления."
-      @s.update(:approved=>true)
+          :body=>"Администратор хостинга одобрил вашу заявку на регистрацию. Вы можете зайти в панель управления.\n\nДоступ к FTP (активируется в течение 10 минут):\nСервер: #{@s.username}.#{APP_CONFIG['domain']}\nПользователь: #{@s.username}\nПароль: #{password}\n"
+      @s.update!(:approved=>true)
       redirect "/admin"
     end
   end

@@ -22,7 +22,7 @@ APP_CONFIG['ENV'] = Sinatra::Application.environment.to_s
 
 # include models
 require 'data_mapper'
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{Sinatra::Application.environment}-test.sqlite")
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{Sinatra::Application.environment}.sqlite")
 DataMapper::Logger.new(STDOUT, :debug)
 Dir[Dir.pwd + "/models/*.rb"].each { |f| require f }
 Dir[Dir.pwd + "/models/*/*.rb"].each { |f| require f }

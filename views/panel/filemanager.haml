@@ -1,0 +1,41 @@
+- @init_url = "/panel/site/#{@site.domain}/filemanager"
+
+.col_12
+  %ul.breadcrumbs
+    %li
+      %a{:href=>"#{@init_url}"} Корень сайта #{@site.domain}
+    - @paths.each_with_index do |p, i|
+      - path = @paths[0..i].join('/')
+      %li
+        %a{:href=>"#{@init_url}/#{path}"} #{p}
+
+
+.col_3
+  - if @listing[:dir].count > 0 || @listing[:file].count > 0
+    %ul.alt
+      - @listing[:dir].each do |d|
+        - if d != '.' && d != '..'
+          %li{:style=>'background-color: #eee'}
+            %strong
+              %a{:href=>"#{@init_url}#{@path}#{d}"} #{d}
+      - @listing[:file].each do |f|
+        %li #{f}
+
+  %form.vertical{:method=>'post', :action=>''}
+    %fieldset
+      %legend Создать новый..
+
+      .col_6
+        %input{:type=>'radio', :name=>'type', :value=>'dir', :id=>'dir', :checked=>true}
+        %label.inline{:for=>'dir'} Каталог
+      
+      .col_6
+        %input{:type=>'radio', :name=>'type', :value=>'file', :id=>'file'}
+        %label.inline{:for=>'file'} Файл
+      
+      .col_8
+        %input{:type=>'text', :name=>'name', :placeholder=>'Название папки/файла'}
+      .col_4
+        %button.small{:type=>'submit', :value=>'создать'} Создать
+  
+.col_9#filewrapper

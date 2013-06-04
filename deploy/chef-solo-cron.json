@@ -1,0 +1,20 @@
+{
+    "run_list": [
+        "recipe[studhosting-vhosts]"
+    ],
+
+    "apache": {
+        "timeout": 30,
+        "prefork": {
+            "startservers": 16,
+            "minspareservers": 16,
+            "maxspareservers": 32,
+            "serverlimit": 400,
+            "maxclients": 400,
+            "maxrequestsperchild": 10000
+        }
+    }
+}
+
+
+

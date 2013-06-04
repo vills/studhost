@@ -1,3 +1,5 @@
+- @init_url = "/panel/site/#{@site.domain}"
+
 .grid.fluid
   .col_12
     %h4= "Информация о сайте #{@site.domain}.#{@site.student.username}.#{APP_CONFIG['domain']}"
@@ -15,8 +17,10 @@
       %h6 FTP
       %ul
         %li= "Сервер: #{@site.student.username}.#{APP_CONFIG['domain']}"
-        %li= "Пользователь: #{@site.student.username}_#{@site.domain}"
-        %li= "Пароль: #{@site.password}"
+        %li= "Пользователь: #{@site.student.username}"
+        %li 
+          Пароль: 
+          %em (был выслан в письме при регистрации)
 
     .col_4
       %h6 MySQL БД
@@ -26,3 +30,5 @@
         %li= "Пользователь: #{@site.student.username}_#{@site.domain}"
         %li= "Пароль: #{@site.password}"
 
+    .col_12
+      %a.button{:href=>"#{@init_url}/filemanager"} Файловый менеджер

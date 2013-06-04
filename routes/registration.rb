@@ -14,10 +14,13 @@ post '/registration' do
   @validate_hash = Helpers::random_string(32)
   @is_admin = false
   @approved = false
-  if Student.all.count < 1
+
+  adminreg = Student.all.count < 1 ? 1 : 0
+  if adminreg > 0
     @is_admin = true
-    # @approved = false  
+    @approved = true
   end
+  
   @student = Speciality.get(params['speciality']).students.new(
                                                                   :name=>params['name'].strip,
                                                                   :email=>params['email'].strip,
@@ -27,9 +30,14 @@ post '/registration' do
                                                                   :approved=>@approved
                                                                   )
   if @student.save
-    @msg = "Для подтверждения своего почтового ящика перейдите по ссылке: http://#{APP_CONFIG['domain']}/registration/validate/#{@validate_hash}"
-    send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
-    haml :'registration/accept', :layout=>:layout_registration
+    if adminreg < 1
+      @msg = "Для подтверждения своего почтового ящика перейдите по ссылке: http://#{APP_CONFIG['domain']}/registration/validate/#{@validate_hash}"
+      send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
+      haml :'registration/accept', :layout=>:layout_registration
+    else
+      `sudo /usr/local/bin/studhosting-user-create.sh '#{@student.username}'`
+      redirect '/'
+    end
   else
     haml :'registration/fail', :layout=>:layout_registration
   end

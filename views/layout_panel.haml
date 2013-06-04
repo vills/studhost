@@ -21,6 +21,9 @@
 
       %ul
         %li
+          %a{:href=>'/'}
+            %i.icon-home
+        %li
           %a{:href=>'/panel'}
             %span= @panel_title || "#{@student.name}"
         %li
@@ -29,5 +32,20 @@
               %i.icon-plus
               Добавить сайт
 
+  - if @sites.count < 1
+    .grid.fluid
+      .col_12
+        .notice.warning
+          %h4 У вас ещё не создано ни одного сайта.
+
+  - else
+    - unless @sites.nil? and @sites.count < 1
+      %nav.navbar-small
+        %ul{:style=>'padding-left: 25px'}
+          %li Мои сайты: 
+        - @sites.each do |site|
+          %li
+            %a{:href=>"/panel/site/#{site.domain}/info"}= site.domain
+
     
-    =yield
+  =yield

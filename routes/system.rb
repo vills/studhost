@@ -8,10 +8,13 @@ end
 get '/system/sites' do
   content_type :json
   @sites = Array.new
-  Site.all.each do |site|
-    pp site
-    student = site.student.username
-    @sites << [ student, site.domain, site.password ]
+  Site.all.each do |site| 
+    @sites << {
+      :fqdn=>"#{site.domain}.#{site.student.username}.#{APP_CONFIG['domain']}",
+      :docroot=>site.docroot,
+      :open_basedir=>site.open_basedir,
+      :username=>site.student.username,
+      :subdomain=>site.domain }
   end
   @sites.to_json
 end

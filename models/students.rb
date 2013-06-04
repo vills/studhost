@@ -40,7 +40,7 @@ class Student
   end
 
   def username
-    self.email.gsub(/\W+/, '')
+    self.email.gsub(/\W+/, '')[0..6]
   end
 
   def self.encrypt(pass, salt)

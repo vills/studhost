@@ -1,25 +1,15 @@
 - @init_url = "/panel"
 
-- if @sites.count < 1
-  .grid.fluid
-    .col_12
-      .notice.warning
-        %h4 У вас ещё не создано ни одного сайта.
-
-- else
-  - unless @sites.nil? and @sites.count < 1
-    %nav.navbar-small
-      %ul
-        %li Мои сайты: 
-      - @sites.each do |site|
-        %li
-          %a{:href=>"#{@init_url}/site/view/#{site.domain}"}= site.domain
 
 
+.col_12
+
+
+- if @sites.count > 0
+  .col_3
+
+  .col_6
+    .notice.warning
+      %h4 Выберите с каким сайтом будете работать
 
   .col_3
-    
-
-
-  .col_9
-    %h3 ww

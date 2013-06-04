@@ -12,7 +12,8 @@ cmds = Array.new
 script_dir = '/usr/local/bin'
 [
   "user-create.sh",
-  "site-create.sh"
+  "site-create.sh",
+  "filemanager-create.sh"
 ].each do |file|
   cookbook_file "#{script_dir}/studhosting-#{file}" do
     source file

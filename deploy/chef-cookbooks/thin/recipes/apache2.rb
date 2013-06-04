@@ -17,7 +17,7 @@ node['thin']['servers'].to_i.times do |i|
 end
 
 
-template "#{node['apache']['dir']}/sites-available/thin" do
+template "#{node['apache']['dir']}/sites-available/000_thin" do
   source "apache2/thin.erb"
   mode 0644
   user "root"
@@ -26,6 +26,6 @@ template "#{node['apache']['dir']}/sites-available/thin" do
   notifies :reload, "service[apache2]"
 end
 
-apache_site "thin" do
+apache_site "000_thin" do
   enable 
 end

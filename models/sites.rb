@@ -13,5 +13,13 @@ class Site
 
   property :password,   String, :required=>true, :required=>true, :length=>10
 
+  def docroot
+    "#{APP_CONFIG['sitespath']}/#{self.student.username}/#{self.domain}"
+  end
+
+  def open_basedir
+    "#{APP_CONFIG['sitespath']}/#{self.student.username}"
+  end
+
   belongs_to :student
 end

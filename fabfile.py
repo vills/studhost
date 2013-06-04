@@ -1,5 +1,5 @@
 from fabric.api import *
-env.hosts = ['root@t.vills.me']
+env.hosts = ['root@studhost.ru']
 
 
 def deploy():
@@ -21,6 +21,7 @@ def deploy():
     with cd('/var/www/.panel'):
         run('tar xzf /tmp/deploy-app.tgz')
         run('bundle install')
+        run('rake upgradedb')
     run('chown -R www-data:www-data /var/www/.panel')
     run('chef-solo -c /var/www/.panel/deploy/chef-solo.rb '
         '-j /var/www/.panel/deploy/chef-solo.json')
@@ -30,13 +31,17 @@ def deploy():
 
 def chef_run():
     local('cp ./scripts/* ./deploy/chef-cookbooks/studhosting-scripts/files/default/.')
-    local('tar czf /tmp/deploy-app.tgz deploy')
+    local('tar czf /tmp/deploy-app.tgz --exclude=*.sqlite --exclude=.git .')
     put('/tmp/deploy-app.tgz', '/tmp/')
     with cd('/var/www/.panel'):
         run('tar xzf /tmp/deploy-app.tgz')
+    #    run('bundle install')
+        run('rake upgradedb')
+    run('chown -R www-data:www-data /var/www/.panel')
     run('chef-solo -c /var/www/.panel/deploy/chef-solo.rb '
         '-j /var/www/.panel/deploy/chef-solo.json')
     run('rm -rf /tmp/deploy-app.tgz')
+    run('service thin restart')
     local('rm -rf /tmp/deploy-app.tgz')
 
 

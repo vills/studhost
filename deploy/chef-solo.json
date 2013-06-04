@@ -20,15 +20,19 @@
 
         "recipe[exim4-light]",
         "recipe[vsftpd]",
+        "recipe[modules]",
         "recipe[ferm]",
 
         "recipe[thin]",
         "recipe[thin::apache2]",
 
-        "recipe[studhosting-scripts]"
+        "recipe[studhosting-scripts]",
+        "recipe[studhosting-vhosts::cron]"
     ],
 
-    "set_fqdn": "t.vills.me",
+    "set_fqdn": "studhost.ru",
+
+    "modules": [ "nf_conntrack_ftp" ],
 
     "authorization": {
         "sudo": {
@@ -58,7 +62,10 @@
     },
 
     "vsftpd": {
-
+        "config": {
+            "ftpd_banner": "Student's hosting FTP server",
+            "userlist_enable": "NO"
+        }
     },
 
     "ferm": {
@@ -69,7 +76,8 @@
             "http": "ACCEPT",
             "https": "ACCEPT",
             "extras": [
-                "proto tcp dport ftp ACCEPT;"
+                "proto tcp dport ftp ACCEPT;",
+                "proto tcp dport 20 ACCEPT;"
             ]
         }
     },
