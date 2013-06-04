@@ -63,6 +63,6 @@ get '/panel/site/:domain' do
     @message = "Нет такого домена"
     haml :send_message
   else
-    haml :'panel/site', :layout=>:layout_panel
+    haml :'panel/site_info', :layout=>:layout_panel
   end
 end

@@ -17,13 +17,14 @@ if [[ -d "$USERDIR" ]]; then
     exit 3
   fi
 
-  `mysql -e "create database ${2}";`
+  USERDB="${1}_${2}"
+  `mysql -e "create database ${USERDB}";`
   if [[ $? -gt 0 ]]; then
     rm -rf "${USERDIR}/${2}"
     exit 4
   fi
 
-  `mysql -e "grant all privileges on *.* to ${2}@localhost identified by '${3}';"`
+  `mysql -e "grant all privileges on *.* to ${USERDB}@localhost identified by '${3}';"`
   if [[ $? -gt 0 ]]; then
     rm -rf "${USERDIR}/${2}"
     exit 4
