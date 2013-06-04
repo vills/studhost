@@ -34,3 +34,5 @@ production:
     admin:
       login:    admin
       password: password
+
+  sitespath: /var/www
