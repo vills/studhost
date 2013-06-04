@@ -27,7 +27,7 @@ get '/admin/users/approve/:id/true' do
       haml :send_message
     else
       send_email "#{@s.email.strip}", :subject=>"Ваша заявка была одобрена",
-          :body=>"Администратор хостинга одобрил вашу заявку на регистрацию. Вы можете зайти в панель управления.\n\nДоступ к FTP (активируется в течение 10 минут):\nСервер: #{@s.username}.#{APP_CONFIG['domain']}\nПользователь: #{@s.username}\nПароль: #{password}\n"
+          :body=>"Администратор хостинга одобрил вашу заявку на регистрацию. Вы можете зайти в панель управления.\n\nДоступ к FTP:\nСервер: #{@s.username}.#{APP_CONFIG['domain']}\nПользователь: #{@s.username}\nПароль: #{password}\n"
       @s.update!(:approved=>true)
       redirect "/admin"
     end
