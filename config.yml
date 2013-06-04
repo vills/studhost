@@ -12,20 +12,23 @@ development: &nps
       login:    admin
       password: password
 
+  sitespath: /var/www
+
 
 
 test:
   <<: *nps
 
 
+
 production:
   emails:
-    admin:  admin@t.vills.me
+    admin:  admin@studhost.ru
     robot:
-      email:  no-reply@t.vills.me
+      email:  no-reply@studhost.ru
       name:   Hosting Robot
 
-  domain:   t.vills.me
+  domain:   studhost.ru
 
   administrators:
     admin:
