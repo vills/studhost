@@ -1,3 +1,5 @@
+- @init_url = "/panel"
+
 - if @sites.count < 1
   .grid.fluid
     .col_12
@@ -5,16 +7,19 @@
         %h4 У вас ещё не создано ни одного сайта.
 
 - else
-  %nav.navbar-small
-    %ul
-      %li
-        %a{:href=>'/logout', :title=>'Выход'}
-          %i.icon-signout
-          Выход
+  - unless @sites.nil? and @sites.count < 1
+    %nav.navbar-small
+      %ul
+        %li Мои сайты: 
+      - @sites.each do |site|
+        %li
+          %a{:href=>"#{@init_url}/site/view/#{site.domain}"}= site.domain
+
 
 
   .col_3
-    %h4 ttt
+    
+
 
   .col_9
     %h3 ww
