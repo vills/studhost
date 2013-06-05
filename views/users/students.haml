@@ -22,10 +22,10 @@
           %input.col_10{:type=>'text', :name=>'name', :value=>"#{ea.name}"}
           %button{:type=>'submit', :style=>'display:none'}
       %td
-        %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
-          %i.icon-pencil
-        %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.name}')"}
-          %i.icon-remove
+        / %a{:href=>'#', :onclick=>"return editLine('#{ea.id}')"}
+        /   %i.icon-pencil
+        / %a{:href=>("#{@init_url}/#{ea.id}/delete"), :onclick=>"return confirmDelete('#{ea.name}')"}
+        /   %i.icon-remove
 
 - if @u.count < 1
   .notice.warning

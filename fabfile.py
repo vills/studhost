@@ -12,7 +12,7 @@ def deploy():
     run('stat /tmp/chef-omnibus.deb > /dev/null || '
         'curl -L -o /tmp/chef-omnibus.deb '
         '\'https://opscode-omnibus-packages.s3.amazonaws.com/debian/6/x86_64/'
-        'chef_11.4.0-1.debian.6.0.5_amd64.deb\' && '
+        'chef_11.4.4-2.debian.6.0.5_amd64.deb\' && '
         'dpkg -i /tmp/chef-omnibus.deb > /dev/null')
     run('gem list | grep \'bundler \' > /dev/null || gem install bundler')
     run('cat /root/.bashrc | grep export | grep gems > /dev/null || '

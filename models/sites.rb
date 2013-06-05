@@ -5,10 +5,9 @@ class Site
   include DataMapper::Resource
 
   property :id,         Serial
-  property :domain,     String, :required=>true, :key=>true, :unique=>true,
+  property :domain,     String, :required=>true, :key=>true,
                                 :messages => {
-                                  :presence  => "Нужно указать домен.",
-                                  :is_unique => "Такой домен уже существует. Выберите другой.",
+                                  :presence  => "Нужно указать домен."
                                 }
 
   property :password,   String, :required=>true, :required=>true, :length=>10
@@ -19,6 +18,10 @@ class Site
 
   def open_basedir
     "#{APP_CONFIG['sitespath']}/#{self.student.username}"
+  end
+
+  def fqdn
+    "#{self.domain}.#{self.student.username}.#{APP_CONFIG['domain']}"
   end
 
   belongs_to :student

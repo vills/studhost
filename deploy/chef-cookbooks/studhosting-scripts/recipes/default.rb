@@ -13,7 +13,9 @@ script_dir = '/usr/local/bin'
 [
   "user-create.sh",
   "site-create.sh",
-  "filemanager-create.sh"
+  "filemanager-create.sh",
+  "filemanager-delete.sh",
+  "filemanager-edit.sh"
 ].each do |file|
   cookbook_file "#{script_dir}/studhosting-#{file}" do
     source file

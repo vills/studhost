@@ -3,6 +3,7 @@
         "recipe[sudo]",
         "recipe[logrotate]",
         "recipe[hostname]",
+        "recipe[timezone-ii]",
 
         "recipe[mysql::server]",
 
@@ -31,6 +32,8 @@
     ],
 
     "set_fqdn": "studhost.ru",
+
+    "tz": "Europe/Moscow",
 
     "modules": [ "nf_conntrack_ftp" ],
 
@@ -84,7 +87,7 @@
 
     "thin": {
         "app_path": "/var/www/.panel",
-        "servers": 1,
+        "servers": 10,
         "apache": {
             "domain": "t.vills.me"
         }

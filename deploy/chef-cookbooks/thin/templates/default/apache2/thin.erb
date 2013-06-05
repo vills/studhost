@@ -20,6 +20,12 @@
   ProxyPassReverse / balancer://thinservers/
   ProxyPreserveHost on
 
+  ProxyPass /css !
+  ProxyPass /img !
+  ProxyPass /js !
+  ProxyPass /style.css !
+  ProxyPass /user_rewrites.css !
+
   <Proxy *>
     Order deny,allow
     Allow from all

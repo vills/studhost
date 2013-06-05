@@ -35,7 +35,16 @@ post '/registration' do
       send_email "#{params['email'].strip}", :subject=>"Подтверждение почтового адреса", :body=>@msg
       haml :'registration/accept', :layout=>:layout_registration
     else
-      `sudo /usr/local/bin/studhosting-user-create.sh '#{@student.username}'`
+      password = Helpers::random_string(10)
+      `sudo /usr/local/bin/studhosting-user-create.sh '#{@student.username}' '#{password}'`
+      @msg = "Ура, теперь вы администратор #{APP_CONFIG['domain']}!
+      Мы уже создали вам пользователя для FTP
+
+      Доступ к FTP :
+      Сервер: #{@student.username}.#{APP_CONFIG['domain']}
+      Пользователь: #{@student.username}
+      Пароль: #{password}"
+      send_email "#{@student.email.strip}", :subject=>"Ваш пароль к FTP", :body=>@msg
       redirect '/'
     end
   else

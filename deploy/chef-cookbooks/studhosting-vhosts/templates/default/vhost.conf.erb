@@ -9,7 +9,7 @@
   RewriteEngine On
 
   <Directory <%= @docroot %>>
-    Options FollowSymLinks
+    Options FollowSymLinks +Indexes
     AllowOverride All
     Order allow,deny
     Allow from all
