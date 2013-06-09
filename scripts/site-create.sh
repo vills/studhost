@@ -26,7 +26,7 @@ if [[ -d "$USERDIR" ]]; then
     exit 4
   fi
 
-  `mysql -e "grant all privileges on *.* to ${USERDB}@localhost identified by '${3}';"`
+  `mysql -e "grant all privileges on ${USERDB}.* to ${USERDB}@localhost identified by '${3}';"`
   if [[ $? -gt 0 ]]; then
     rm -rf "${USERDIR}/${2}"
     exit 4
