@@ -53,16 +53,59 @@
   - if @is_file > 0
     %form{:method=>'post', :action=>''}
       %input{:type=>'hidden', :name=>'editor', :value=>'editor'}
-      %textarea{:name=>'text', :id=>'editor', :style=>'width:100%; height:100%; background: none'} #{@data}
-      %button{:type=>'submit'} Сохранить
+      %textarea{:name=>'text', :id=>'editor'} #{@data}
+      .col_10
+        %p Подсветка синтаксиса:
+        %select{:onchange=>'selectSyntax()', :id=>'syntax'}
+          %option{:value=>'application/x-httpd-php', :selected=>true} PHP+HTML
+          %option{:value=>'text/html'} HTMLmixed
+          %option{:value=>'text/css'} CSS
+          %option{:value=>'text/javascript'} JavaScript
+          %option{:value=>'text/x-php'} PHP
+          %option{:value=>'text/x-mysql'} SQL
+
+      .col_2.right
+        %button{:type=>'submit'} Сохранить
+
+    .col_12
+      %input{:style=>'width:100%', :type=>'text', :placeholder=>'Справка по функциям PHP. Введите название функции и нажмите клавишу Enter.', :onkeypress=>'return openPhpFunction(event)', :id=>'phpFunc'}
 
     :javascript
-      var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-        autoCloseTags: true,
-        lineNumbers: true,
-        extraKeys: {"Ctrl-Space": "autocomplete"},
-        theme: "xq-light"
+      function openPhpFunction(e) {
+        if (e.keyCode == 13) {
+          phpfunction = $("#phpFunc").val();
+          console.log("Opening function "+phpfunction);
+          var win=window.open("http://www.php.net/manual/ru/function."+phpfunction+".php", '_blank');
+          win.focus();
+          return false;
+        }
+      }
+      $(document).ready(function() {
+        editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+          mode: "application/x-httpd-php",
+          autoCloseTags: true,
+          autofocus: true,
+          styleActiveLine: true,
+          lineNumbers: true,
+          highlightSelectionMatches: true,
+          tabMode: "indent",
+          extraKeys: {
+            "Ctrl-Space": "autocomplete"
+          },
+          theme: "monokai"
+        });
+        editor.setSize('100%', '450px')
+        console.log("loaded");
       });
+      function selectSyntax() {
+        var synt = $("#syntax").val();
+        editor.setOption("mode", synt);
+        editor.focus();
+      }
+      CodeMirror.commands.autocomplete = function(cm) {
+        CodeMirror.showHint(cm, CodeMirror.javascriptHint);
+      }
+
 
   - else
     %h4{:style=>'color:#dadada'}
