@@ -6,6 +6,11 @@
 #
 
 
+package "g++" do
+  action :install
+end
+
+
 gem_package "thin" do
   action :install
 end
@@ -42,4 +47,11 @@ template '/etc/thin/thin.conf' do
   owner   'root'
   group   'root'
   notifies :restart, "service[thin]"
+end
+
+
+sudo "vagrant" do
+  user "vagrant"
+  nopasswd true
+  only_if "/usr/bin/id vagrant"
 end
