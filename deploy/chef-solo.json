@@ -87,7 +87,7 @@
 
     "thin": {
         "app_path": "/var/www/.panel",
-        "servers": 10,
+        "servers": 1,
         "apache": {
             "domain": "t.vills.me"
         }
