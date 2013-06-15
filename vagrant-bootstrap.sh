@@ -32,10 +32,10 @@ else
   cp -R /vagrantfiles/* /var/www/.panel/
   chown -R www-data:www-data /var/www/.panel
 
-  pushd /var/www/.panel
-  bundle install
-  rake upgradedb
-  popd
+  # pushd /var/www/.panel
+  # bundle install
+  # rake upgradedb
+  # popd
   
   service thin restart
 fi
