@@ -5,7 +5,7 @@ get '/registration' do
   if Student.count < 1
     @faculties = Faculty.all
   else
-    @faculties = Faculty.all(:order=>[:title.asc], :id.gt=>1)
+    @faculties = Faculty.all(:order=>[:title.asc])
   end
   haml :'registration/main', :layout=>:layout_registration
 end
