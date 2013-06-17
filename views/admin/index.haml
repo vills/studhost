@@ -1,0 +1,32 @@
+- @init_url = "/admin/users"
+
+%h4 Новые студенты
+- if @notApprovedStudents.count < 1
+  %p
+    %em Нет
+- else
+  %table.striped
+    %tr
+      %th{:style=>'text-align:left'} Имя
+      %th{:style=>'text-align:left'} Факультет / Специальность
+      %th{:style=>'text-align:left'} E-mail
+      %th
+    - @notApprovedStudents.each do |f|
+      %tr
+        %td= f.name
+        %td= "#{f.speciality.faculty.title} / #{f.speciality.title}"
+        %td= f.email
+        %td
+          .col_6.left
+            %a{:href=>"#{@init_url}/approve/#{f.id}/true"}
+              %i.icon-thumbs-up.icon-2x
+          .col_6.right
+            %a{:href=>"#{@init_url}/approve/#{f.id}/false", :onclick=>"return confirmFalse('#{f.name}')"}
+              %i.icon-thumbs-down.icon-2x
+  %hr
+
+%script
+  :plain
+    function confirmFalse(i) {
+      return confirm("Точно отказать студенту \"" + i + "\"?")
+    }

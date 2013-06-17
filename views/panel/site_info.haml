@@ -1,0 +1,34 @@
+- @init_url = "/panel/site/#{@site.domain}"
+
+.grid.fluid
+  .col_12
+    %h4= "Информация о сайте #{@site.domain}.#{@site.student.username}.#{APP_CONFIG['domain']}"
+
+    .col_4
+      %h6 Общая
+      %ul
+        %li
+          Домен: 
+          %a{:href=>"http://#{@site.domain}.#{@site.student.username}.#{APP_CONFIG['domain']}", :target=>"blank"}
+            #{@site.domain}.#{@site.student.username}.#{APP_CONFIG['domain']}
+        %li= "Путь к файлам на сервере: #{APP_CONFIG['sitespath']}/#{@site.student.username}/#{@site.domain}"
+
+    .col_4
+      %h6 FTP
+      %ul
+        %li= "Сервер: #{@site.student.username}.#{APP_CONFIG['domain']}"
+        %li= "Пользователь: #{@site.student.username}"
+        %li 
+          Пароль: 
+          %em (был выслан в письме при регистрации)
+
+    .col_4
+      %h6 MySQL БД
+      %ul
+        %li= "Сервер: localhost"
+        %li= "Имя БД: #{@site.student.username}_#{@site.domain}"
+        %li= "Пользователь: #{@site.student.username}_#{@site.domain}"
+        %li= "Пароль: #{@site.password}"
+
+    .col_12
+      %a.button{:href=>"#{@init_url}/filemanager"} Файловый менеджер

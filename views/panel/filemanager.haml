@@ -1,0 +1,113 @@
+- @init_url = "/panel/site/#{@site.domain}/filemanager"
+
+.col_12
+  %ul.breadcrumbs
+    %li
+      %a{:href=>"#{@init_url}"} Корень сайта #{@site.domain}
+    - @paths.each_with_index do |p, i|
+      - path = @paths[0..i].join('/')
+      %li
+        %a{:href=>"#{@init_url}/#{path}"} #{p}
+
+
+.col_3
+  - if @listing[:dir].count > 0 || @listing[:file].count > 0
+    %ul.alt
+      - url = "#{@init_url}#{@path}".gsub('//', '/').chomp('/').chomp(@filename).chomp('/')
+      - @listing[:dir].each do |d|
+        - if d != '.' && d != '..'
+          %li{:style=>'background-color: #eee; padding-right: 5px'}
+            %a{:href=>"#{url}/#{d.delete('/')}/DELETE", :onclick=>"return confirm('Точно удалить директорию со всем её содержимым?')", :style=>'float:right'}
+              %i.icon-remove
+            %strong
+              %a{:href=>"#{url}/#{d.delete('/')}"} #{d}
+      - @listing[:file].each do |f|
+        - if @filename == f
+          %li
+            %strong #{f}
+        - else
+          %li{:style=>'padding-right: 5px'}
+            %a{:href=>"#{url}/#{f.delete('/')}/DELETE", :onclick=>"return confirm('Точно удалить файл?')", :style=>'float:right'}
+              %i.icon-remove
+            %a{:href=>"#{url}/#{f.delete('/')}"} #{f}
+
+  %form.vertical{:method=>'post', :action=>''}
+    %fieldset
+      %legend Создать новый..
+
+      .col_6
+        %input{:type=>'radio', :name=>'type', :value=>'dir', :id=>'dir', :checked=>true}
+        %label.inline{:for=>'dir'} Каталог
+      
+      .col_6
+        %input{:type=>'radio', :name=>'type', :value=>'file', :id=>'file'}
+        %label.inline{:for=>'file'} Файл
+      
+      .col_8
+        %input{:type=>'text', :name=>'name', :placeholder=>'Название папки/файла'}
+      .col_4
+        %button.small{:type=>'submit', :value=>'создать'} Создать
+  
+.col_9
+
+  - if @is_file > 0
+    %form{:method=>'post', :action=>''}
+      %input{:type=>'hidden', :name=>'editor', :value=>'editor'}
+      %textarea{:name=>'text', :id=>'editor'} #{@data}
+      .col_10
+        %p Подсветка синтаксиса:
+        %select{:onchange=>'selectSyntax()', :id=>'syntax'}
+          %option{:value=>'application/x-httpd-php', :selected=>true} PHP+HTML
+          %option{:value=>'text/html'} HTMLmixed
+          %option{:value=>'text/css'} CSS
+          %option{:value=>'text/javascript'} JavaScript
+          %option{:value=>'text/x-php'} PHP
+          %option{:value=>'text/x-mysql'} SQL
+
+      .col_2.right
+        %button{:type=>'submit'} Сохранить
+
+    .col_12
+      %input{:style=>'width:100%', :type=>'text', :placeholder=>'Справка по функциям PHP. Введите название функции и нажмите клавишу Enter.', :onkeypress=>'return openPhpFunction(event)', :id=>'phpFunc'}
+
+    :javascript
+      function openPhpFunction(e) {
+        if (e.keyCode == 13) {
+          phpfunction = $("#phpFunc").val();
+          console.log("Opening function "+phpfunction);
+          var win=window.open("http://www.php.net/manual/ru/function."+phpfunction+".php", '_blank');
+          win.focus();
+          return false;
+        }
+      }
+      $(document).ready(function() {
+        editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+          mode: "application/x-httpd-php",
+          autoCloseTags: true,
+          autofocus: true,
+          styleActiveLine: true,
+          lineNumbers: true,
+          highlightSelectionMatches: true,
+          tabMode: "indent",
+          extraKeys: {
+            "Ctrl-Space": "autocomplete"
+          },
+          theme: "monokai"
+        });
+        editor.setSize('100%', '450px')
+        console.log("loaded");
+      });
+      function selectSyntax() {
+        var synt = $("#syntax").val();
+        editor.setOption("mode", synt);
+        editor.focus();
+      }
+      CodeMirror.commands.autocomplete = function(cm) {
+        CodeMirror.showHint(cm, CodeMirror.javascriptHint);
+      }
+
+
+  - else
+    %h4{:style=>'color:#dadada'}
+      %i.icon-reply
+      Выберите файл для редактирования

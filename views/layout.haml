@@ -1,0 +1,24 @@
+!!!
+%html{ html_attrs('ru')}
+  %head
+    %title= @title || "Студенческий хостинг"
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link{:href=>'/css/kickstart.css', :rel=>'stylesheet', :media=>'all'}
+    %link{:href=>'/style.css', :rel=>'stylesheet'}
+    %link{:href=>'/user_rewrites.css', :rel=>'stylesheet'}
+
+    %script{:type=>'text/javascript', :src=>"https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
+
+  %body
+    %nav.navbar{:style=>'height:60px'}
+      %ul{:style=>'padding-top:5px'}
+        %li
+          %a{:href=>'/'}
+            %span Студенческий
+            хостинг
+
+    .grid.fluid
+      .col_12
+        =yield

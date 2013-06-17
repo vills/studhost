@@ -1,0 +1,82 @@
+.user-small {
+  margin-top:0;
+  padding:6px 11px;
+}
+
+a.user-breadcumps {
+  color: #000;
+  text-decoration: none;
+}
+a.user-breadcumps:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.regstep {
+  margin-bottom: 20px;
+}
+.regstep-last {
+  margin-top: 20px;
+}
+
+
+/* NAV BAR*/
+.navbar-small{
+top:0;
+left:0;
+width: 100%;
+background:#eee;
+color:#333;
+z-index:1001;
+margin:0;
+
+/*-webkit-border-bottom-right-radius: 10px;
+-webkit-border-bottom-left-radius: 10px;
+-moz-border-radius-bottomright: 10px;
+-moz-border-radius-bottomleft: 10px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;*/
+}
+  
+  .navbar-small span{
+  color:#86dc00;
+  }
+  
+  
+  .navbar-small ul{
+  display:inline-block;
+  margin:0;
+  padding:0;
+  }
+  
+    .navbar-small li{
+    margin:0;
+    padding:0;
+    list-style-type:0;
+    display:inline-block;
+    }
+    
+    .navbar-small li a{
+    display:inline-block;
+    color:#333;
+    padding:1em 1.3em;
+    text-decoration:none;
+    text-transform: uppercase;
+    line-height:100%;
+    font-size: 1em;
+    }
+
+
+.CodeMirror {
+  border: 1px solid #eee;
+}
+.CodeMirror pre {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  line-height: inherit; 
+  color: inherit;;
+}
+.CodeMirror-activeline-background {
+  background: #000 !important;
+}

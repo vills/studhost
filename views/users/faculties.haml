@@ -1,0 +1,49 @@
+- @init_url = "/admin/users/faculties"
+
+.col_8
+  %h4{:style=>'padding:0; margin:0'} Факультеты
+.col_4.right{:style=>'height:40px'}
+  %form{:method=>'post', :action=>"#{@init_url}/add"}
+    .col_11
+      %input.small{:type=>'text', :name=>'fname', :placeholder=>'добавить факультет', :style=>'width:100%'}
+    .col_1
+      %button.green.button.user-small{:type=>'submit', :value=>'Добавить'}
+        %i.icon-plus-sign
+
+%div
+  &nbsp;
+%div
+  &nbsp;
+
+%table.striped
+  - @faculties.each do |f|
+    %tr
+      %td{:style=>'width:90%', :id=>"line#{f.id}"}
+        %a{:href=>"#{@init_url}/#{f.id}/specialities"}= f.title
+        %form.hide{:method=>'post', :action=>"#{@init_url}/#{f.id}/edit"}
+          %input.col_10{:type=>'text', :name=>'fname', :value=>"#{f.title}"}
+          %button{:type=>'submit', :style=>'display:none'}
+      %td
+        %a{:href=>'#', :onclick=>"return editLine('#{f.id}')"}
+          %i.icon-pencil
+        %a{:href=>("#{@init_url}/#{f.id}/delete"), :onclick=>"return confirmDelete('#{f.title}')"}
+          %i.icon-remove
+
+- if @faculties.count < 1
+  .notice.warning
+    %h3 Пока что здесь нет записей.
+    %p
+      %em Вы можете их добавить в правом верхнем углу.
+
+
+%script
+  :plain
+    function confirmDelete(i) {
+      return confirm("Точно удалить факультет \"" + i + "\"?\nЭто также удалит всех пользователей и специальности внутри факультета!")
+    }
+    function editLine(i) {
+      $("#line"+i).children('a').addClass('hide');
+      form = $("#line"+i).children('form');
+      form.removeClass('hide');
+      form.children('input').focus();
+    }

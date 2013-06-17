@@ -1,0 +1,38 @@
+development: &nps
+  emails:
+    admin:  admin@hosting.vills.me
+    robot:
+      email:  no-reply@hosting.vills.me
+      name:   Hosting Robot
+
+  domain:   localhost:4567
+
+  administrators:
+    admin:
+      login:    admin
+      password: password
+
+  sitespath: /var/www
+
+
+
+test:
+  <<: *nps
+
+
+
+production:
+  emails:
+    admin:  admin@studhost.ru
+    robot:
+      email:  no-reply@studhost.ru
+      name:   Hosting Robot
+
+  domain:   studhost.ru
+
+  administrators:
+    admin:
+      login:    admin
+      password: password
+
+  sitespath: /var/www

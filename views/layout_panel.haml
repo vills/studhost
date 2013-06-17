@@ -1,0 +1,84 @@
+!!!
+%html{ html_attrs('ru')}
+  %head
+    %title= @title || "Панель управления"
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link{:href=>'/css/kickstart.css', :rel=>'stylesheet', :media=>'all'}
+    %link{:href=>'/style.css', :rel=>'stylesheet'}
+    %link{:href=>'/user_rewrites.css', :rel=>'stylesheet'}
+
+    %script{:type=>'text/javascript', :src=>"https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
+
+
+    / CodeMirror
+    %script{:type=>'text/javascript', :src=>'/codemirror/lib/codemirror.js'}
+    %link{:href=>'/codemirror/lib/codemirror.css', :rel=>'stylesheet'}
+
+    / CodeMirror addons
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/selection/active-line.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/mode/overlay.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/edit/matchbrackets.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/edit/closebrackets.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/edit/closetag.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/search/searchcursor.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/search/match-highlighter.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/hint/show-hint.js'}
+    %link{:href=>'/codemirror/addon/hint/show-hint.css', :rel=>'stylesheet'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/hint/javascript-hint.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/addon/hint/html-hint.js'}
+    / CodeMirror language bindings
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/sql/sql.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/css/css.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/javascript/javascript.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/vbscript/vbscript.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/xml/xml.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/clike/clike.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/php/php.js'}
+    %script{:type=>'text/javascript', :src=>'/codemirror/mode/htmlmixed/htmlmixed.js'}
+    / CodeMirror themes
+    %link{:href=>'/codemirror/theme/xq-light.css', :rel=>'stylesheet'}
+    %link{:href=>'/codemirror/theme/monokai.css', :rel=>'stylesheet'}
+    %link{:href=>'/codemirror/theme/solarized.css', :rel=>'stylesheet'}
+    %link{:href=>'/codemirror/theme/neat.css', :rel=>'stylesheet'}
+    %link{:href=>'/codemirror/theme/lesser-dark.css', :rel=>'stylesheet'}
+
+  %body
+    %nav.navbar
+      %ul{:style=>'float:right'}
+        %li
+          %a{:href=>'/logout', :title=>'Выход'}
+            %i.icon-signout
+            Выход
+
+      %ul
+        %li
+          %a{:href=>'/'}
+            %i.icon-home
+        %li
+          %a{:href=>'/panel'}
+            %span= @panel_title || "#{@student.name}"
+        %li
+          %a{:href=>'/panel/site/add'}
+            %button.green.small
+              %i.icon-plus
+              Добавить сайт
+
+  - if @sites.count < 1
+    .grid.fluid
+      .col_12
+        .notice.warning
+          %h4 У вас ещё не создано ни одного сайта.
+
+  - else
+    - unless @sites.nil? and @sites.count < 1
+      %nav.navbar-small
+        %ul{:style=>'padding-left: 25px'}
+          %li Мои сайты: 
+        - @sites.each do |site|
+          %li
+            %a{:href=>"/panel/site/#{site.domain}/info"}= site.domain
+
+    
+  =yield

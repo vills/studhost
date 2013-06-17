@@ -1,0 +1,59 @@
+%form{:method=>'post', :action=>''}
+
+  .regstep#step1
+    %h5 Какой у вас факультет?
+    %select#faculty{:name=>'faculty', :style=>'width:100%'}
+      %option{:disabled=>true, :selected=>true}
+      - @faculties.each do |f|
+        %option{:value=>"#{f.id}"}= f.title
+
+  .regstep.hide#step2
+    %h5 А специальность?
+    %select#speciality{:name=>'speciality', :style=>'width:100%'}
+      %option{:disabled=>true, :selected=>true}
+    %hr
+
+
+  .regstep.regstep-last.hide#step3
+    %h5 А теперь немного информации о себе..
+    %p{:style=>'font-size: 11px'}
+      %i.icon-warning-sign
+      %em Пожалуйста, заполните все поля, а то ничего не получится.
+
+    %label{:for=>'email'} Электронный адрес
+    %input.col_12{:type=>'text', :name=>'email'}
+
+    %label{:for=>'name'} Фамилия Имя Отчество
+    %input.col_12{:type=>'text', :name=>'name'}
+
+    %label{:for=>'password'} Какой пароль хотите?
+    %input.col_12{:type=>'text', :name=>'password'}
+
+    %hr
+
+    %button.col_12.blue{:type=>'submit'} Дайте мне хостинг!
+
+    %hr
+
+
+
+
+%script
+  :plain
+    $("#faculty").change(function() {
+      $.getJSON('/registration/specialities-list/'+this.value, function(data) {
+        var items = [];
+       
+        $.each(data, function(key, val) {
+          items.push('<option value="' + val['id'] + '">' + val['title'] + '</option>');
+        });
+
+        $("#speciality").append( items.join() );
+        $("#step2").fadeIn('middle');
+      });
+    });
+
+    $("#speciality").change(function() {
+      $("#step3").fadeIn('middle');
+    });
+

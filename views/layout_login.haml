@@ -1,0 +1,19 @@
+!!!
+%html{ html_attrs('ru')}
+  %head
+    %title= @title || "Авторизация"
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link{:href=>'/css/kickstart.css', :rel=>'stylesheet', :media=>'all'}
+    %link{:href=>'/style.css', :rel=>'stylesheet'}
+    %link{:href=>'/user_rewrites.css', :rel=>'stylesheet'}
+
+    %script{:type=>'text/javascript', :src=>"https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:type=>'text/javascript', :src=>'/js/kickstart.js'}
+
+  %body
+    %div.callout
+      %h3 АВТОРИЗАЦИЯ
+
+    .grid
+      =yield

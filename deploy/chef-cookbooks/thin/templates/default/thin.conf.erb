@@ -1,0 +1,17 @@
+--- 
+pid: /var/run/thin/thin.pid
+group: www-data
+timeout: 30
+log: /var/log/thin/thin.log
+max_conns: <%= node['thin']['max-conns'] %>
+require: []
+
+address: 127.0.0.1
+port: 3000
+
+max_persistent_conns: <%= node['thin']['max-persistent-conns'] %>
+environment: <%= node['thin']['environment'] %>
+user: www-data
+servers: <%= node['thin']['servers'] %>
+daemonize: true
+chdir: <%= node['thin']['app_path'] %>

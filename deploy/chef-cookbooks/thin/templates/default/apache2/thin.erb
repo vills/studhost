@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+  ServerName <%= node['thin']['apache']['domain'] %>
+  ServerAlias www.<%= node['thin']['apache']['domain'] %>
+
+  DocumentRoot <%= node['thin']['app_path'] %>/public
+
+  RewriteEngine On
+
+  <Proxy balancer://thinservers>
+    <% @ports.each do |port| %>
+    BalancerMember http://127.0.0.1:<%= port %>
+    <% end %>
+  </Proxy>
+
+  # Redirect all non-static requests to thin
+  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+  RewriteRule ^/(.*)$ balancer://thinservers%{REQUEST_URI} [P,QSA,L]
+
+  ProxyPass / balancer://thinservers/
+  ProxyPassReverse / balancer://thinservers/
+  ProxyPreserveHost on
+
+  ProxyPass /css !
+  ProxyPass /img !
+  ProxyPass /js !
+  ProxyPass /style.css !
+  ProxyPass /user_rewrites.css !
+
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+
+  # Custom log file locations
+  ErrorLog  <%= node['thin']['apache']['error_log'] %>
+  CustomLog <%= node['thin']['apache']['access_log'] %> combined
+
+</VirtualHost>

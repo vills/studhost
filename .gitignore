@@ -1,0 +1,8 @@
+*.sqlite
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+fabfile.pyc
+Gemfile.lock
+.vagrant/
+.sublime-vagrant-build

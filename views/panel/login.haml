@@ -1,0 +1,27 @@
+.col_4
+
+.col_4
+  - if @falselogin
+    .col_12
+      .notice.error
+        %p Нет такого пользователя
+
+
+  %form{:method=>'post', :action=>'/login'}
+    .col_12
+      %input#email.col_12{:type=>'text', :name=>'email', :placeholder=>'e-mail'}
+
+    %br
+    %br
+
+    .col_12
+      %input#password.col_12{:type=>'password', :name=>'password', :placeholder=>'пароль'}
+
+    .col_12
+      %button.blue.medium.col_12{:type=>'submit'}
+        %i.icon-signin
+        Авторизация
+
+    %hr
+
+.col_4

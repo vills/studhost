@@ -1,0 +1,104 @@
+{
+    "run_list": [
+        "recipe[sudo]",
+        "recipe[logrotate]",
+        "recipe[hostname]",
+        "recipe[timezone-ii]",
+
+        "recipe[mysql::server]",
+
+        "recipe[apache2]",
+        "recipe[apache2::mod_rewrite]",
+        "recipe[apache2::mod_php5]",
+        "recipe[apache2::mod_autoindex]",
+
+        "recipe[php]",
+        "recipe[php::module_apc]",
+        "recipe[php::module_curl]",
+        "recipe[php::module_gd]",
+        "recipe[php::module_mysql]",
+        "recipe[php::module_sqlite3]",
+
+        "recipe[exim4-light]",
+        "recipe[vsftpd]",
+        "recipe[modules]",
+        "recipe[ferm]",
+
+        "recipe[thin]",
+        "recipe[thin::apache2]",
+
+        "recipe[studhosting-scripts]",
+        "recipe[studhosting-vhosts::cron]"
+    ],
+
+    "set_fqdn": "studhost.ru",
+
+    "tz": "Europe/Moscow",
+
+    "modules": [ "nf_conntrack_ftp" ],
+
+    "authorization": {
+        "sudo": {
+            "include_sudoers_d": true
+        }
+    },
+
+    "mysql": {
+        "remove_anonymous_users": true,
+        "server_root_password": "",
+        "server_repl_password": "2sfe5dfk!2wcs9*R",
+        "server_debian_password": "sr3rgRddpc23FDws",
+        "socket": "/var/run/mysqld/mysqld.sock",
+        "bind_address": "localhost"
+    },
+
+    "apache": {
+        "timeout": 30,
+        "prefork": {
+            "startservers": 16,
+            "minspareservers": 16,
+            "maxspareservers": 32,
+            "serverlimit": 400,
+            "maxclients": 400,
+            "maxrequestsperchild": 10000
+        }
+    },
+
+    "vsftpd": {
+        "config": {
+            "ftpd_banner": "Student's hosting FTP server",
+            "userlist_enable": "NO"
+        }
+    },
+
+    "ferm": {
+        "active": true,
+        "input": {
+            "policy": "DROP",
+            "ssh": "ACCEPT",
+            "http": "ACCEPT",
+            "https": "ACCEPT",
+            "extras": [
+                "proto tcp dport ftp ACCEPT;",
+                "proto tcp dport 20 ACCEPT;"
+            ]
+        }
+    },
+
+    "thin": {
+        "app_path": "/var/www/.panel",
+        "servers": 10,
+        "apache": {
+            "domain": "t.vills.me"
+        }
+    },
+
+    "exim4": {
+        "configtype": "internet",
+        "local_interfaces": "127.0.0.1",
+        "relay_nets": "127.0.0.1"
+    }
+}
+
+
+
